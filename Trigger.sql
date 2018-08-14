@@ -11,21 +11,17 @@ AS
 BEGIN
 	declare @LoanNo int
 	declare @Name nvarchar(50)
-	declare @Name2 nvarchar(50)
+	
 	
 	select @LoanNo =  "Loan No" From inserted
 	Select @Name = NBS from inserted
-	Select @Name2 = CoBorrower from inserted
+	
 
 	IF (@Name IN (Select CoBorrower from inserted))
 		
 		INSERT INTO Mortgage.NameAudit 
 		Values (@LoanNo, @Name, Cast(Getdate() as nvarchar(50)))
 		
-	Else IF (@Name2 IN (Select NBS from inserted))
-		
-		INSERT INTO Mortgage.NameAudit 
-		Values (@LoanNo, @Name, Cast(Getdate() as nvarchar(50)))
 
 	Else
 
